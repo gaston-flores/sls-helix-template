@@ -19,5 +19,9 @@
     "serverless-offline": "^9.0.0",
     "serverless-plugin-typescript": "^2.1.2",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "graphql": "^16.5.0",
+    "graphql-helix": "^1.13.0"
   }
 }

@@ -6,12 +6,18 @@ provider:
   runtime: nodejs14.x
 
 functions:
-  example:
-    handler: handlers.exampleHandler
+  explorer:
+    handler: handlers.explorerHandler
     events:
       - httpApi:
-          path: /
+          path: /graphql
           method: get
+  graphQL:
+    handler: handlers.graphQLHandler
+    events:
+      - httpApi:
+          path: /graphql
+          method: post
 
 plugins:
   - serverless-esbuild
