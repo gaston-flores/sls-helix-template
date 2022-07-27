@@ -1,0 +1,18 @@
+service: sls-ts-template
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  example:
+    handler: handlers.exampleHandler
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
