@@ -1,12 +1,12 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
 import { getGraphQLParameters, processRequest } from "graphql-helix";
-import schema from './schema'
+import schema from "./schema";
 import { formatHelixRequest, formatHelixResponse } from "./utils";
 
 async function graphQLHandler(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
-  const request = formatHelixRequest(event)
+  const request = formatHelixRequest(event);
   // Extract the Graphql parameters from the request
   const { operationName, query, variables } = getGraphQLParameters(request);
 
@@ -19,7 +19,7 @@ async function graphQLHandler(
     schema,
   });
 
-  return formatHelixResponse(result)
+  return formatHelixResponse(result);
 }
 
 export default graphQLHandler;

@@ -1,6 +1,9 @@
-
-import { APIGatewayProxyEventHeaders, APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { ProcessRequestResult, Request } from 'graphql-helix';
+import {
+  APIGatewayProxyEventHeaders,
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResultV2,
+} from "aws-lambda";
+import { ProcessRequestResult, Request } from "graphql-helix";
 
 /**
  * Renames all keys of the header object to lower case
@@ -9,10 +12,13 @@ import { ProcessRequestResult, Request } from 'graphql-helix';
  * @returns Header object with keys in lowercase
  */
 function headersToLower(headers: APIGatewayProxyEventHeaders) {
-  return Object.keys(headers).reduce((acc, headerKey) => ({
-    ...acc,
-    [headerKey.toLowerCase()]: headers[headerKey]
-  }), {});
+  return Object.keys(headers).reduce(
+    (acc, headerKey) => ({
+      ...acc,
+      [headerKey.toLowerCase()]: headers[headerKey],
+    }),
+    {}
+  );
 }
 
 /**
@@ -26,7 +32,7 @@ export function formatHelixRequest(event: APIGatewayProxyEventV2): Request {
     body: event.body ? JSON.parse(event.body) : null,
     headers: headersToLower(event.headers),
     method: event.requestContext.http.method,
-    query: event.queryStringParameters
+    query: event.queryStringParameters,
   };
 }
 
@@ -39,7 +45,7 @@ export function formatHelixRequest(event: APIGatewayProxyEventV2): Request {
 export function formatHelixResponse<TContext, TRootValue>(
   result: ProcessRequestResult<TContext, TRootValue>
 ): APIGatewayProxyResultV2 {
-  if (result.type === 'RESPONSE') {
+  if (result.type === "RESPONSE") {
     const { headers, status, payload } = result;
     return {
       headers: headers.reduce(
@@ -47,13 +53,12 @@ export function formatHelixResponse<TContext, TRootValue>(
         {}
       ),
       statusCode: status,
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     };
   } else {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: 'unsupported operation type' })
+      body: JSON.stringify({ error: "unsupported operation type" }),
     };
   }
 }
-
